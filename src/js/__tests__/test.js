@@ -6,6 +6,17 @@ import { Zombie } from "../app"
 import { Daemon } from "../app"
 import { Character } from "../app"
 
+test('test error health', () => {
+    expect(() => {
+        let healths = new Bowman("Sveta");
+        healths.health = 0;
+        healths.levelUp();
+
+    }).toThrow(new Error("нельзя повысить левел умершего"));
+});
+
+
+
 test('test error name', () => {
     expect(() => {
         let names = new Bowman("N");
@@ -29,7 +40,7 @@ test("test Bowman", () => {
         attack: 25,
         defence: 25,
     }
-    expect(character1).toEqual(expected)
+    expect(character1).toMatchObject(expected)
 })
 
 test("test Swordsman", () => {
@@ -42,7 +53,7 @@ test("test Swordsman", () => {
         attack: 40,
         defence: 10,
     }
-    expect(character2).toEqual(expected)
+    expect(character2).toMatchObject(expected)
 })
 test("test Magician", () => {
     let character3 = new Magician("Ben");
@@ -54,7 +65,7 @@ test("test Magician", () => {
         attack: 10,
         defence: 40,
     }
-    expect(character3).toEqual(expected)
+    expect(character3).toMatchObject(expected)
 })
 test("test Undead", () => {
     let character4 = new Undead("Jack");
@@ -66,7 +77,7 @@ test("test Undead", () => {
         attack: 25,
         defence: 25,
     }
-    expect(character4).toEqual(expected)
+    expect(character4).toMatchObject(expected)
 })
 test("test Zombie", () => {
     let character5 = new Zombie("Sofia");
@@ -78,7 +89,7 @@ test("test Zombie", () => {
         attack: 40,
         defence: 10,
     }
-    expect(character5).toEqual(expected)
+    expect(character5).toMatchObject(expected)
 })
 test("test Daemon", () => {
     let character6 = new Daemon("Tom");
@@ -90,5 +101,32 @@ test("test Daemon", () => {
         attack: 10,
         defence: 40,
     }
-    expect(character6).toEqual(expected)
+    expect(character6).toMatchObject(expected)
+})
+test("test level", () => {
+    let loss = new Zombie("Sveta"); 
+    loss.levelUp();
+    let stage = {
+        name: "Sveta",
+        type: "Zombie",
+        health: 100,
+        level: 2,
+        attack: 48,
+        defence: 12,
+    }
+    expect(loss).toMatchObject(stage)
+   
+})
+test("test damage", () => {
+    let loss = new Zombie("Sveta"); 
+    loss.damage(10);
+    let stage = {
+        name: "Sveta",
+        type: "Zombie",
+        health: 91,
+        level: 1,
+        attack: 40,
+        defence: 10,
+    }
+    expect(loss).toMatchObject(stage)
 })
